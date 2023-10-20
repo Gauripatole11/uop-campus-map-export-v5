@@ -188,7 +188,7 @@ function Map() {
       map.flyTo(regionCoord, zoom);
     };
 
-    return <Button onClick={onClick}>Add marker on click</Button>;
+    return <Button onClick={onClick}>RE-CENTRE</Button>;
   }
 
 
@@ -245,6 +245,8 @@ function Map() {
                 />
             )}
             <h2>Categories</h2>
+
+
             <FormControl>
               {Object.keys(icons).map((category) => (
                   <FormControlLabel
@@ -263,11 +265,23 @@ function Map() {
                       }}
                   />
               ))}
-            </FormControl>
+            </FormControl><b>
             <Button style={buttonStyles} onClick={() => setSelectedCategories([])}>
-              Clear All
-            </Button>
+              View All
+            </Button></b>
             <FlyToButton />
+            {/* Additional Information Section */}
+            <div style={{ marginTop: "20px", padding: "5px", background: "#f0f0f0", borderRadius: "5px" }}>
+              <h3>Additional Information</h3>
+              <ul>
+                <b><u>Stockton Campus</u></b>
+                <li>3601 Pacific Ave.
+                  Stockton, CA 95211
+                  Admissions: 209.946.2211</li>
+              </ul>
+
+              {/* Add more content as needed */}
+            </div>
           </div>
         </Grid>
         <Grid item xs={10}>
