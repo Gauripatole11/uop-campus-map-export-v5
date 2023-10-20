@@ -4,11 +4,14 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  Checkbox
+  Checkbox,
+  AppBar,
+  Toolbar, // Add the Toolbar component
+  Typography, // Add the Typography component
 } from "@material-ui/core";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet"; // Import Leaflet
+import L from "leaflet";
 
 const zoom = 13;
 const regionCoord = [37.9799, -121.3129];
@@ -191,23 +194,27 @@ function Map() {
   };
 
   const categoryColors = {
-    Makerspace: "blue",
-    "Study Rooms": "green",
-    LABS: "orange",
-
+    Makerspace: "#C1E3ED",
+    "Study Rooms": "#C1E3ED",
+    LABS: "#C1E3ED",
   };
 
-  // Custom CSS styles for buttons
   const buttonStyles = {
     marginBottom: "10px",
     width: "100%",
-    textAlign: "left"
+    textAlign: "left",
   };
 
   return (
       <Grid container>
         <Grid item xs={2}>
-          {/* Sidebar with category buttons */}
+          <AppBar position="static" style={{ background: "#0C023E" }}>
+            <Toolbar>
+              <Typography variant="h6" style={{ fontFamily: "Brush Script MT, Brush Script Std, cursive", fontSize: "1.5rem" }}>
+                University of the Pacific
+              </Typography>
+            </Toolbar>
+          </AppBar>
           <div style={sidebarStyles}>
             <h2>Categories</h2>
             <FormControl>
@@ -224,16 +231,12 @@ function Map() {
                       label={category}
                       style={{
                         backgroundColor: categoryColors[category] || "gray",
-                        marginBottom: "5px", // Add some spacing between buttons
+                        marginBottom: "5px",
                       }}
                   />
               ))}
-
             </FormControl>
-            <Button
-                style={buttonStyles}
-                onClick={() => setSelectedCategories([])}
-            >
+            <Button style={buttonStyles} onClick={() => setSelectedCategories([])}>
               Clear All
             </Button>
             <FlyToButton />
@@ -243,7 +246,7 @@ function Map() {
           <MapContainer
               center={regionCoord}
               zoom={zoom}
-              style={{ height: "90vh" }}
+              style={{ height: "80vh" }}
               whenCreated={setMap}
           >
             <TileLayer
@@ -251,15 +254,12 @@ function Map() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {/* Display filtered markers */}
-
             {filteredMarkers.map((marker, index) => (
                 <Marker
                     key={index}
                     position={marker.position}
-                    icon={icons[marker.category]} // Use the appropriate icon based on the category
+                    icon={icons[marker.category]}
                 >
-                  {/* Customize the Popup content */}
                   <Popup>
                     <div>
                       <h3>{marker.name}</h3>
@@ -279,7 +279,6 @@ function Map() {
             ))}
           </MapContainer>
         </Grid>
-        <FlyToButton />
       </Grid>
   );
 }
