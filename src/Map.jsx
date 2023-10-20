@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Button,
@@ -161,6 +161,27 @@ const markers = [
 function Map() {
   const [map, setMap] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]); // Moved the state declaration here
+  const [uopLogoUrl, setUopLogoUrl] = useState("");
+
+  useEffect(() => {
+    // Fetch the University of the Pacific logo URL
+    fetch("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT79srloY6rh0EKkmKdvkIKS2OqlsiQIQQ0ig&usqp=CAU") // Replace with the actual URL
+        .then((response) => {
+          if (response.ok) {
+            return response.blob();
+          } else {
+            throw new Error("Failed to fetch logo");
+          }
+        })
+        .then((blob) => {
+          // Create a URL from the blob
+          const objectURL = URL.createObjectURL(blob);
+          setUopLogoUrl(objectURL);
+        })
+        .catch((error) => {
+          console.error("Error fetching logo:", error);
+        });
+  }, []); // Empty dependency array to fetch the logo once on component mount
 
   function FlyToButton() {
     const onClick = () => {
@@ -216,6 +237,13 @@ function Map() {
             </Toolbar>
           </AppBar>
           <div style={sidebarStyles}>
+            {uopLogoUrl && (
+                <img
+                    src={uopLogoUrl}
+                    alt="University of the Pacific"
+                    style={{ maxWidth: '100%', marginBottom: '10px' }}
+                />
+            )}
             <h2>Categories</h2>
             <FormControl>
               {Object.keys(icons).map((category) => (
