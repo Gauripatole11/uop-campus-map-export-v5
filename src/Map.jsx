@@ -13,6 +13,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
+
 const zoom = 13;
 const regionCoord = [37.9799, -121.3129];
 const additionalMarkerCoord = [37.9817, -121.312];
